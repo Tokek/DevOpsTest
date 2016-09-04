@@ -29,3 +29,4 @@
     mysql_user: "name={{ mysql_root_user }} password={{ mysql_root_password }}"
 	
 - include: django-install.yml
+- include: run-django-cms.yml

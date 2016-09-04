@@ -1,8 +1,5 @@
 DevOps Test Code Repository
 
-Copyright 2016
-Author: Marcel Tirtariandi
-
 Ansible script for DevOps test
 
 Purpose: 
