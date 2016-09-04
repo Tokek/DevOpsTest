@@ -1,0 +1,23 @@
+---
+# DevOps Test - Task M#1
+# Ansible script to install MySQL, nginx and DjangoCMS.
+# Create new user for DjangoCMS
+# Upload installed DjangoCMS application code to a new repo in GitHub
+- hosts: localhost
+  vars_files:
+  - vars/mysql-root.yml
+  tasks:
+  - name: Install MySQL
+    sudo: yes
+    apt: pkg=mysql-server state=installed update_cache=true
+  - name: Install MySQL DB
+    sudo: yes
+    apt: pkg=python-mysqldb state=installed update_cache=true
+  - name: Start MySQL on boot
+    sudo: yes
+    service: name=mysql enabled=yes state=started
+  - name: install nginx
+    sudo: yes
+    apt: pkg=nginx state=installed update_cache=true
+  - name: Secure MySQL User
+    mysql_user: "name={{ mysql_root_user }} password={{ mysql_root_password }}"
