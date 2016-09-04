@@ -2,30 +2,32 @@
 # Install and configure Django CMS
 
 - name: Create Django Group
-  sudo: yes
   group: name=django state=present
   
 - name: Create Django User
-  sudo: yes
   user: name=django groups=django
   
 - name: Install python pip
-  sudo: yes
   apt: pkg=python-pip state=installed update_cache=true
   
 - name: Install virtualenv
-  sudo: yes
   apt: name=python-virtualenv state=present update_cache=true
 
 - name: Install virtualenv wrapper
-  sudo: yes
   apt: name=virtualenvwrapper state=present update_cache=true
 
 - name: Create virtualenv
-  shell: virtualenv env
+  remote_user: django
+  shell: virtualenv /home/django/env 
+  
+- name: Activate virtualenv
+  remote_user: django
+  raw: "source /home/django/env/bin/activate"
   
 - name: Install Django
+  remote_user: django
   pip: name=django virtualenv=/home/django/django-env
   
 - name: Install Django CMS
-  pip: name=django-cms virtualenv=/home/django/django-cms-env
+  remote_user: django
+  pip: name=djangocms-installer virtualenv=/home/django/django-cms-env

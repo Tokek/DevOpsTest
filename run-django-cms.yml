@@ -1,7 +1,10 @@
 ---
 # Create Django CMS project under Django user
-
+  
 - name: Create Django project directory
-  become: yes
-  become_user: django
+  remote_user: django
   shell: /bin/mkdir /home/django/test-project && /bin/chown django:django /home/django/test-project
+  
+- name: Run DjangoCMS
+  remote_user: django
+  shell: cd /home/django/test-project && djangocms -f -p . testsite
