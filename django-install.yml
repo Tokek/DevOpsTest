@@ -7,14 +7,12 @@
 - name: Create Django User
   user: name=django groups=django
   
-- name: Install python pip
-  apt: pkg=python-pip state=installed update_cache=true
-  
-- name: Install virtualenv
-  apt: name=python-virtualenv state=present update_cache=true
-
-- name: Install virtualenv wrapper
-  apt: name=virtualenvwrapper state=present update_cache=true
+- name: Install python pip, virtualenv and virtualenvwrapper
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - python-pip
+	- python-virtualenv
+	- virtualenvwrapper
 
 - name: Create virtualenv
   remote_user: django

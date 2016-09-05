@@ -11,17 +11,15 @@
   - vars/mysql-root.yml
   
   tasks:
-  - name: Install MySQL
-    apt: pkg=mysql-server state=installed update_cache=true
-	
-  - name: Install MySQL DB
-    apt: pkg=python-mysqldb state=installed update_cache=true
-	
+  - name: Install MySQL, MySQL DB and nginx
+    apt: pkg={{ item }} state=installed update_cache=true
+ 	with_items:
+	  - mysql-server
+	  - python-mysqldb
+	  - nginx
+	  
   - name: Start MySQL on boot
     service: name=mysql enabled=yes state=started
-	
-  - name: install nginx
-    apt: pkg=nginx state=installed update_cache=true
 	
 - include: django-install.yml
 - include: run-django-cms.yml
